@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Management</title>
+    <style>
+        .none{
+            display: none;
+        }
+        .master{
+            display: flex;
+            flex-direction: row;
+            height: 40rem;
+        }
+        .flex-item{
+            width: 30%;
+            height: 100%;
+            border: 1px solid black;
+            text-align: center;
+            align-items: center;
+            background-color: lightgreen;
+        }
+
+        .container{
+            overflow-y: auto;
+        }
+        .flex-item > .transfer {
+            max-height: 10rem;
+        }
+        .flex-item > .borrow {
+            max-height: 20rem;
+        }
+        .flex-item > .shelf{
+            max-height: 35rem;
+        }
+
+        table{
+            width: 100%;
+            margin-bottom: 1rem;
+            background-color: rgb(49, 141, 49);
+        }
+        th, td{
+            width: 33%;
+            border: 1px solid black;
+        }
+        th input{
+            width: 100%;
+            text-align: center;
+        }
+
+        .container:not(.shelf) .shelf,
+        .container:not(.transfer) .transfer,
+        .container:not(.borrow) .borrow{
+            display: none;
+        }
+        
+        .edit .edit::before{
+            content: 'Edit book';
+        }
+        .editable:not(.edit) .edit::before{
+            content: "Save editing";
+        }
+        .edit input{
+            pointer-events: none;
+        }
+        
+    </style>
+</head>
+<body>
+    <div class="master">
+        <div class="flex-item">
+            <div>
+                <h3>Available books</h3>
+            </div>
+            <div id="shelf" class="shelf container"></div>
+        </div>
+        <div class="flex-item">
+            <button id="addBtn">Add a book</button>
+            <div id="add-window" class="none">
+                <input id="nameIn" placeholder="Enter book name"><br>
+                <input id="gerneIn" placeholder="Enter book gerne"><br>
+                <input id="authorIn" placeholder="Enter author name"><br>
+                <input id="priceIn" placeholder="Enter book price"><br>
+                <button id="addBook">Add</button>
+                <button id="closeBtn">Close</button>
+            </div>
+        </div>
+        <div class="flex-item">
+            <div>
+                <h3>Confirm borrowing</h3>
+            </div>
+            <div id="transfer" class="transfer container"></div>
+            <div>
+                <button id="borrow-confirm">Borrow 0 book (Total: 0)</button>
+                <hr>
+            </div>
+            <div>
+                <h3>Borrowed books</h3>
+            </div>
+            <div id="borrow" class="borrow container"></div>
+        </div>
+    </div>
+    
+
+    <script src="BookMangement.js"></script>
+
+    <script>
+        let globalId = 1000;
+
+        let bookShelf = new Container(document.getElementById("shelf"), [])
+        let transferShelf = new Container(document.getElementById("transfer"), []);
+        let borrowShelf = new Container(document.getElementById("borrow"), []);
+
+
+        let shelf_book = [
+            {name: "yolo1", gerne: "action", author: "a", price: "100"},
+            {name: "yolo2", gerne: "horror", author: "b", price: "200"},
+            {name: "yolo3", gerne: "documentary", author: "c", price: "300"},
+            {name: "yolo4", gerne: "documentary", author: "d", price: "410"},
+            {name: "yolo5", gerne: "documentary", author: "e", price: "350"},
+            {name: "yolo6", gerne: "documentary", author: "f", price: "370"}
+        ];
+
+        for(let book of shelf_book){
+            let newBook = new Book(book.name, book.gerne, book.author, book.price, false, globalId);
+            bookShelf.addBook(newBook);
+            globalId++;
+        }
+
+    </script>
+</body>
+</html>
