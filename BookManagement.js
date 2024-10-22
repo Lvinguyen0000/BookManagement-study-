@@ -176,6 +176,7 @@ function createBookBlock(book){
     cell = document.createElement('td');
     button = document.createElement('button');
     button.classList.add("shelf");
+    button.classList.add("delete");
     button.textContent = "Delete book";
     cell.appendChild(button);
     row.appendChild(cell);
